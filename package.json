@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --coverage --detectOpenHandles",
-    "dev": "node app"
+    "dev": "node app",
+    "start": "node app"
   },
   "keywords": [],
   "author": "",
