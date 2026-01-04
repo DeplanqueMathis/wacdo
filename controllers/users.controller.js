@@ -108,7 +108,7 @@ exports.updateUser = async (req, res) => {
 		
 		const updatedUser = await user.save();
 
-		res.status(201).json(updatedUser);
+		res.status(200).json(updatedUser);
 	} catch (error) {
 		console.error("Error updating user:", error);
 		return res.status(500).json({ message: "Server error" });
@@ -118,9 +118,12 @@ exports.updateUser = async (req, res) => {
 exports.changeUserRole = async (req, res) => {
 	try {
 		const id = req.params.id;
-		const {role} = req.body;
+		const {role} = req.params;
 
 		const user = await User.findById(id);
+
+		if (!['customer', 'admin', 'reception', 'preparator'].includes(role))
+			return res.status(400).json({message: "Invalid role"});
 		
 		if (!user)
 			return res.status(404).json({message: "User not found"});

@@ -8,7 +8,7 @@ const hasRole = require('../middlewares/hasRole.middleware');
 router.post('/register', body('email').isEmail(), registerUser);
 router.post('/login', body('email').isEmail(), loginUser);
 router.get('/', auth, hasRole('admin'), getUsers);
-router.post('/:id', auth, updateUser);
-router.post('/change-role/:id/:role', auth, hasRole('admin'), changeUserRole);
+router.put('/:id', auth, updateUser);
+router.put('/change-role/:id/:role', auth, hasRole('admin'), changeUserRole);
 
 module.exports = router;

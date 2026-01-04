@@ -24,3 +24,213 @@ paths:
                 type: array
                 items:
                   type: object
+  /users/register:
+    post:
+      tags:
+        - Utilisateurs
+      summary: Crée un nouvel utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                firstName:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                email:
+                  type: string
+                  format: email
+              required:
+                - name
+                - firstName
+                - password
+                - email
+      responses:
+        "200":
+          description: Le nouvel utilisateur créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  firstName:
+                    type: string
+                  email:
+                    type: string
+                  role:
+                    type: string
+  /users/login:
+    post:
+      tags:
+        - Utilisateurs
+      summary: Connexion d'un utilisateur
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  format: password
+                email:
+                  type: string
+                  format: email
+              required:
+                - password
+                - email
+      responses:
+        "200":
+          description: L'utilisateur connecté et son token JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      firstName:
+                        type: string
+                      email:
+                        type: string
+                      role:
+                        type: string
+  /users/{userId}:
+    put:
+      tags:
+        - Utilisateurs
+      security:
+        - bearerAuth: []
+      summary: Met à jour un utilisateur existant
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                firstName:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                email:
+                  type: string
+                  format: email
+      responses:
+        "200":
+          description: L'utilisateur mis à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  firstName:
+                    type: string
+                  email:
+                    type: string
+                  role:
+                    type: string
+        "404":
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "403":
+          description: Accès non autorisé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /users/change-role/{userId}/{role}:
+    put:
+      tags:
+        - Utilisateurs
+      security:
+        - bearerAuth: []
+      summary: Met à jour le role de l'utilisateur
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: L'utilisateur mis à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  firstName:
+                    type: string
+                  email:
+                    type: string
+                  role:
+                    type: string
+        "400":
+          description: Le role fourni est invalide
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "404":
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
