@@ -20,7 +20,7 @@ app.use('/orders', require('./routes/orders.route'));
 app.use('/menus', require('./routes/menus.route'));
 app.use('/users', require('./routes/users.route'));
 
-const file  = fs.readFileSync('./swagger.yaml', 'utf8')
+const file  = fs.readFileSync(process.cwd() + '/swagger.yaml', 'utf8')
 const swaggerDocument = YAML.parse(file)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
