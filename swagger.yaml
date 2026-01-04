@@ -1,0 +1,26 @@
+openapi: 3.0.4
+info:
+  title: API Wacdo
+  description: L'api du back-office de Wacdo.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3030
+
+paths:
+  /users:
+    get:
+      tags:
+        - Utilisateurs
+      security:
+        - bearerAuth: []
+      summary: Retourne la liste des utilisateurs
+      responses:
+        "200":
+          description: Un tableau JSON des utilisateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
