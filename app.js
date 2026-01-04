@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const fs = require("fs")
 const YAML = require('yaml')
+const path = require('path');
 
 dotenv.config();
 
@@ -20,11 +21,11 @@ app.use('/orders', require('./routes/orders.route'));
 app.use('/menus', require('./routes/menus.route'));
 app.use('/users', require('./routes/users.route'));
 
-const file  = fs.readFileSync(process.cwd() + '/swagger.yaml', 'utf8')
+const file  = fs.readFileSync(path.resolve("swagger.yaml"), 'utf8')
 const swaggerDocument = YAML.parse(file)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-module.exports = app.listen(3030, () => {
-	console.log('Server is running on http://localhost:3030');
+module.exports = app.listen(1717, () => {
+	console.log('Server is running on http://localhost:1717');
 });
