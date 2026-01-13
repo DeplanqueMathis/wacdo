@@ -40,7 +40,6 @@ exports.createOrder = async (req, res) => {
 
 		res.status(201).json(newOrder);
 	} catch (error) {
-		console.error(error);
 		return res.status(500).json({ message: "Server error" });
 	}
 };
@@ -64,6 +63,9 @@ exports.updateOrderStatus = async (req, res) => {
 
 		const order = await Order.findById(id);
 
+		if (!order)
+			return res.status(404).json({ message: "Order not found" });
+
 		let oldStatus = order.status;
 
 		// Customers can only cancel pending orders
@@ -78,9 +80,6 @@ exports.updateOrderStatus = async (req, res) => {
 		if(req.user.role === 'reception' && oldStatus !== 'completed' && status === 'delivered')
 			return res.status(403).json({message: "Vous ne pouvez livrer que les commandes complétées"});
 
-		if (!order)
-			return res.status(404).json({ message: "Order not found" });
-
 		if (status)
 			order.status = status;
 
@@ -88,7 +87,6 @@ exports.updateOrderStatus = async (req, res) => {
 
 		res.status(201).json(updatedOrder);
 	} catch (error) {
-		console.error(error);
 		return res.status(500).json({ message: "Server error" });
 	}
 };

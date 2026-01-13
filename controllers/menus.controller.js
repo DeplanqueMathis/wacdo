@@ -31,7 +31,6 @@ exports.createMenu = async (req, res) => {
 
 		res.status(201).json(newMenu);
 	} catch (error) {
-		console.error(error);
 		return res.status(500).json({ message: "Server error" });
 	}
 };

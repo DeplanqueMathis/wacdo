@@ -110,16 +110,15 @@ exports.updateUser = async (req, res) => {
 
 		res.status(200).json(updatedUser);
 	} catch (error) {
-		console.error("Error updating user:", error);
 		return res.status(500).json({ message: "Server error" });
 	}
 }
 
 exports.changeUserRole = async (req, res) => {
 	try {
-		const id = req.params.id;
-		const {role} = req.params;
+		const {id, role} = req.params;
 
+		console.log(id);
 		const user = await User.findById(id);
 
 		if (!['customer', 'admin', 'reception', 'preparator'].includes(role))
